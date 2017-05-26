@@ -367,6 +367,38 @@ impl Point {
         self.rotate_rad(pivot, angle.to_radians())
     }
 
+    /// Linearly interpolates from one vector to another by `t`.
+    ///
+    /// `t` < 0 or `t` > 1 gives results outside the
+    /// rectangular bounds of the vectors.
+    #[inline]
+    pub fn lerp(self, other: Point, t: f32) -> Point {
+        self + (other - self) * t
+    }
+
+    /// Returns `true` if `self` is within the (inclusive) bounds
+    /// of the rectangle defined by two vertices.
+    #[inline]
+    pub fn is_in_rect(self, vert1: Point, vert2: Point) -> bool {
+        let min_x = vert1.x.min(vert2.x);
+        let max_x = vert1.x.max(vert2.x);
+        let min_y = vert1.y.min(vert2.y);
+        let max_y = vert1.y.max(vert2.y);
+
+        self.x >= min_x && self.x <= max_x &&
+        self.y >= min_y && self.y <= max_y
+    }
+
+    /// Clamps a vector to within the (inclusive) bounds of the rectangle
+    /// defined by two vertices.
+    #[inline]
+    pub fn clamp_to_rect(self, vert1: Point, vert2: Point) -> Point {
+        Point {
+            x: num::clamp(self.x, vert1.x, vert2.x),
+            y: num::clamp(self.y, vert1.y, vert2.y),
+        }
+    }
+
     /// Reinterprets the x- and y-components of a point as a vector.
     #[inline]
     pub fn as_vec(self) -> Vector {
