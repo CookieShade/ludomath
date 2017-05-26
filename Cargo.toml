@@ -1,6 +1,6 @@
 [package]
 name = "ludomath"
-version = "1.0.0"
+version = "1.1.0"
 authors = ["CookieShade <CookieShade@users.noreply.github.com>"]
 description = "A math library for 2D games and graphics"
 documentation = "https://docs.rs/ludomath"
