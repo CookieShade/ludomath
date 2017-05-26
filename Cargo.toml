@@ -7,6 +7,7 @@ documentation = "https://docs.rs/ludomath"
 repository = "https://github.com/CookieShade/ludomath"
 readme = "README.md"
 keywords = ["game", "graphics", "vector", "math", "random"]
+categories = ["science"]
 license = "Apache-2.0"
 
 [dependencies]
