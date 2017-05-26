@@ -564,12 +564,16 @@ impl Rotation {
     }
 
     /// Returns the angle of rotation, in radians.
+    ///
+    /// Return values are contained in (-τ/2, τ/2], aka. (-π, π].
     #[inline]
     pub fn angle_rad(self) -> f32 {
         self.sin.atan2(self.cos)
     }
 
     /// Returns the angle of rotation, in degrees.
+    ///
+    /// Return values are approximately contained in (-180, 180].
     #[inline]
     pub fn angle_deg(self) -> f32 {
         self.angle_rad().to_degrees()
