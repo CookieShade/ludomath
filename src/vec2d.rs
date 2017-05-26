@@ -594,6 +594,32 @@ impl Rotation {
     pub fn slerp(self, other: Rotation, t: f32) -> Rotation {
         Rotation::new_rad(num::lerp(self.angle_rad(), other.angle_rad(), t))
     }
+
+    /// Quickly interpolates between two rotations.
+    ///
+    /// Significantly faster than slerp, but doesn't have constant angle speed.
+    /// This gets jerkier the further the two rotations are from eachother.
+    ///
+    /// Treats the rotations as direction vectors, linearly interpolates
+    /// between them, and normalizes the result to a new direction vector,
+    /// which is used as the new rotation.
+    #[inline]
+    pub fn nlerp(self, other: Rotation, t: f32) -> Rotation {
+        let raw_x = num::lerp(self.cos, other.cos, t);
+        let raw_y = num::lerp(self.sin, other.sin, t);
+        if (raw_x, raw_y) == (0.0, 0.0) {
+            // Would result in division by zero
+            self
+        }
+        else {
+            // Normalize vector (raw_x, raw_y)
+            let inv_magnitude = (raw_x*raw_x + raw_y*raw_y).sqrt().recip();
+            Rotation {
+                cos: raw_x * inv_magnitude,
+                sin: raw_y * inv_magnitude,
+            }
+        }
+    }
 }
 
 impl fmt::Debug for Rotation {
