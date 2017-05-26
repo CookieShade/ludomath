@@ -563,6 +563,14 @@ impl Rotation {
         }
     }
 
+    /// Linearly interpolates the angle between two rotations.
+    ///
+    /// Analogous to the common quaternion interpolation function.
+    #[inline]
+    pub fn slerp(self, other: Rotation, t: f32) -> Rotation {
+        Rotation::new_rad(num::lerp(self.angle_rad(), other.angle_rad(), t))
+    }
+
     /// Returns the angle of rotation, in radians.
     ///
     /// Return values are contained in (-τ/2, τ/2], aka. (-π, π].
