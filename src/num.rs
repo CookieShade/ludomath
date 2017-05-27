@@ -1,4 +1,5 @@
 //! A small collection of numeric functions.
+use std::mem;
 
 /// Clamps `num` to the range [`a`, `b`].
 ///
@@ -63,4 +64,23 @@ pub fn modulo(num: f32, denom: f32) -> f32 {
     else { 
         rem
     }
+}
+
+/// Quickly, but roughly, approximates 1/sqrt(x).
+///
+/// Uses a technique popularized, but not invented, by John Carmack
+/// in Quake 3 Arena, generally known as the fast inverse square root.
+/// Has a maximum error of about 0.175%.
+///
+/// Although `1.0/x.sqrt()` likely won't be optimized by the compiler,
+/// any hardware implementation of 1/sqrt(x) will be both faster
+/// and more accurate, and should as such be preferred.
+#[inline]
+pub fn inv_sqrt(x: f32) -> f32 {
+    const MAGIC_NUMBER: u32 = 0x5f375a86;
+
+    let bits: u32 = unsafe { mem::transmute(x) };
+    let hacked_bits = MAGIC_NUMBER - (bits >> 1);
+    let y: f32 = unsafe { mem::transmute(hacked_bits) };
+    y*(1.5 - 0.5*x*y*y)
 }
