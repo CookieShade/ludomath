@@ -302,6 +302,22 @@ fn rot_slerp_midpoint() {
 }
 
 #[test]
+fn rot_nlerp_endpoints() {
+    let r1 = Rotation::new_deg(-35.0);
+    let r2 = Rotation::new_deg(32.0);
+    assert_approx(r1.nlerp(r2, 0.0), r1);
+    assert_approx(r1.nlerp(r2, 1.0), r2);
+}
+
+#[test]
+fn rot_nlerp_midpoint() {
+    let r1 = Rotation::new_deg(27.0);
+    let r2 = Rotation::new_deg(143.0);
+    let mid = r1.nlerp(r2, 0.5);
+    assert_approx(mid.angle_deg(), (r1.angle_deg() + r2.angle_deg())/2.0);
+}
+
+#[test]
 fn transform_point_identity() {
     let p = Point::new(-3.0, 2.0);
     assert_approx(TRANSFORM_IDENTITY.transform(p), p);
