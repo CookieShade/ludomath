@@ -480,9 +480,7 @@ fn num_modulo_negative() {
     assert_approx(num::modulo(-167.0, 100.0), 33.0);
 }
 
-// Test doesn't pass because the margin of error is too great,
-// but the approximation is nearly accurate to three decimal places.
-// #[test]
-// fn num_inv_sqrt() {
-//     assert_approx(num::inv_sqrt(2.0), 1.0/2.0f32.sqrt());
-// }
+#[test]
+fn num_inv_sqrt() {
+    assert!((num::inv_sqrt(2.0) - 1.0/2.0f32.sqrt()).abs() < 0.001);
+}
