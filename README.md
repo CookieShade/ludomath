@@ -15,7 +15,7 @@ as well as a few basic numeric functions.
 In `Cargo.toml`:
 ```rust
 [depencencies]
-ludomath = "1.0"
+ludomath = "1.1"
 ```
 
 And in your Rust source:
