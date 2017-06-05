@@ -592,7 +592,9 @@ impl Rotation {
     /// Fairly slow, like the analogous common quaternion `slerp` function.
     #[inline]
     pub fn slerp(self, other: Rotation, t: f32) -> Rotation {
-        Rotation::new_rad(num::lerp(self.angle_rad(), other.angle_rad(), t))
+        let diff_angle = other.sub(self).angle_rad();
+        let r3 = Rotation::new_rad(diff_angle*t);
+        self.add(r3)
     }
 
     /// Quickly interpolates between two rotations.
