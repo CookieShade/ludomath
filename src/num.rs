@@ -75,6 +75,8 @@ pub fn modulo(num: f32, denom: f32) -> f32 {
 /// Although `1.0/x.sqrt()` likely won't be optimized by the compiler,
 /// any hardware implementation of 1/sqrt(x) will be both faster
 /// and more accurate, and should as such be preferred.
+///
+/// Returns nonsense for negative numbers, NaN and infinities.
 #[inline]
 pub fn inv_sqrt(x: f32) -> f32 {
     const MAGIC_NUMBER: u32 = 0x5f375a86;
