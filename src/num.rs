@@ -80,7 +80,7 @@ pub fn inv_sqrt(x: f32) -> f32 {
     const MAGIC_NUMBER: u32 = 0x5f375a86;
 
     let bits: u32 = unsafe { mem::transmute(x) };
-    let hacked_bits = MAGIC_NUMBER - (bits >> 1);
+    let hacked_bits = MAGIC_NUMBER.wrapping_sub(bits >> 1);
     let y: f32 = unsafe { mem::transmute(hacked_bits) };
     y*(1.5 - 0.5*x*y*y)
 }
